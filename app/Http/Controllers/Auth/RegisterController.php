@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -50,12 +51,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role'=>['required','string'],
+      
+            'postalCode'=>['required','max:99999'],
+            'phoneNumber'=>['required','max:9999999999']
         ]);
     }
-
+  
     /**
      * Create a new user instance after a valid registration.
      *
@@ -64,10 +70,38 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
         return User::create([
-            'name' => $data['name'],
+            'firstName' => $data['firstName'],
+            'lastName' => $data['lastName'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role'=>$data['role'],
+            'wage'=>$data['wage'],
+            'avatar'=>$data['avatar'],
+            'postalCode'=>$data['postalCode'],
+            'phoneNumber'=>$data['phoneNumber']
         ]);
     }
+    public function store(Request $request)
+    {
+        
+            $user = new User([
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role'=>$request->role,
+            'wage'=>$request->wage,
+            'avatar'=>$request->avatar,
+            'postalCode'=>$request->postalCode,
+            'phoneNumber'=>$request->phoneNumber
+            ]);
+    
+            $user->save();
+    
+            return view('welcome');
+        
+    }
+    
 }
