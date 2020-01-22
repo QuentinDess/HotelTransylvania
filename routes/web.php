@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\Auth\RegisterController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,3 +22,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/','UserController@showStaff')->name('index');
 Route::get('/rooms', 'RoomController@index')->name('showRoom');
+Route::post('/register','Auth\RegisterController@store')->name('postUser');
