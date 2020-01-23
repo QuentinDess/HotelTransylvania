@@ -30,6 +30,9 @@
                 @endif
             @else
             <li>
+              <a   href="{{ route('index') }}">{{ __('Accueil') }}</a>
+            </li>
+            <li>
             <a   href="{{ route('showRoom') }}">{{ __('Nos chambre') }}</a>
           </li>
                 @if(Auth::user()->role=="client")
@@ -98,17 +101,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Modifier') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('postUser') }}">
+                    <form method="POST" action="{{ route('updateUser', $user->id)}}">
                         @csrf
 
                         <div class="form-group row">
                             <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
 
                             <div class="col-md-6">
-                                <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror" name="firstName" value="{{ old('firstName') }}" required autocomplete="firstName" autofocus>
+                                <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror" name="firstName" value="{{$user->firstName }}" required autocomplete="firstName" autofocus>
 
                                 @error('firstName')
                                     <span class="invalid-feedback" role="alert">
@@ -121,7 +124,7 @@
                         <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
 
                             <div class="col-md-6">
-                                <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" name="lastName" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus>
+                                <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" name="lastName" value="{{ $user->lastName }}" required autocomplete="lastName" autofocus>
 
                                 @error('lastName')
                                     <span class="invalid-feedback" role="alert">
@@ -135,7 +138,7 @@
                         <label for="postalCode" class="col-md-4 col-form-label text-md-right">{{ __('Code Postal') }}</label>
 
                             <div class="col-md-6">
-                                <input id="postalCode" type="number" class="form-control @error('name') is-invalid @enderror" name="postalCode" value="{{ old('postalCode') }}" required autocomplete="postalCode" autofocus>
+                                <input id="postalCode" type="number" class="form-control @error('name') is-invalid @enderror" name="postalCode" value="{{ $user->postalCode }}" required autocomplete="postalCode" autofocus>
 
                                 @error('postalCode')
                                     <span class="invalid-feedback" role="alert">
@@ -149,7 +152,7 @@
                         <label for="phoneNumber" class="col-md-4 col-form-label text-md-right">{{ __('Numéro de téléphone') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phoneNumber" type="number" class="form-control @error('name') is-invalid @enderror" name="phoneNumber" value="{{ old('phoneNumber') }}" required autocomplete="phoneNumber" autofocus>
+                                <input id="phoneNumber" type="number" class="form-control @error('name') is-invalid @enderror" name="phoneNumber" value="{{ $user->phoneNumber }}" required autocomplete="phoneNumber" autofocus>
 
                                 @error('phoneNumber')
                                     <span class="invalid-feedback" role="alert">
@@ -163,7 +166,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Adresse e-mail') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -172,10 +175,42 @@
                                 @enderror
                             </div>
                         </div>
-                        <input  type="hidden" name="role" value="client">
-                       
-                        
+                        <div class="form-group row">
+                            <label for="wage" class="col-md-4 col-form-label text-md-right">{{ __('salaire') }}</label>
 
+                            <div class="col-md-6">
+                                <input id="wage" type="number" class="form-control @error('wage') is-invalid @enderror" name="wage" value="{{ $user->wage }}"  autocomplete="wage">
+
+                                @error('wage')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>   <div class="form-group row">
+                            <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('avatar') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="avatar" type="text" class="form-control @error('avatar') is-invalid @enderror" name="avatar" value="{{ $user->avatar }}"  autocomplete="avatar">
+
+                                @error('avatar')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+                            <div class="col-md-6">
+                                <select name="role" id="role" required>
+                                    <option  value="client">Client</option>
+                                    <option  value="manager">Manager</option>
+                                    <option  value="personnel">Personnel</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
 
@@ -200,8 +235,8 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                <button type="submit" class="btn btn-primary updateUser">
+                                    {{ __('Modifier') }}
                                 </button>
                             </div>
                         </div>

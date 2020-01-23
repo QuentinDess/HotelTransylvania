@@ -23,74 +23,7 @@
 <body>
 
 
-<!--==========================
-Hero Section
-============================-->
-<section id="hero">
-  <div class="hero-container">
-    <div class="wow fadeIn">
-      <div class="hero-logo">
-        <img class="" src="img/logo.png" alt="Imperial">
-      </div>
 
-      <h1>Bienvennue à l'Hotel Transylvania</h1>
-      <h2>We create <span class="rotating">des chambres à thèmes dans un cadre bucolique</span></h2>
-      <div class="actions">
-      @guest
-              
-                    <a  class="btn-get-started" href="{{ route('login') }}">{{ __('Login') }}</a>
-              
-                @if (Route::has('register'))
-                  
-                        <a  class="btn-get-started"href="{{ route('register') }}">{{ __('Register') }}</a>
-                   
-                @endif
-            @else
-                    <a  href="#" class="btn-get-started" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->firstName }} <span class="caret"></span>
-                    </a>
-                    <div>
-                    <a  href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();" class="btn-get-started">
-                            {{ __('Logout') }}
-                        </a>
-    ​
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-               
-            @endguest
-       
-      </div>
-    </div>
-  </div>
-</section>
-  <!--==========================
-  Header Section
-  ============================-->
-  <header id="header">
-    <div class="container">
-
-      <div id="logo" class="pull-left">
-        <a href="#hero"><img src="img/logo.png"  alt="" title="" /></img></a>
-        <!-- Uncomment below if you prefer to use a text image -->
-        <!--<h1><a href="#hero">Header 1</a></h1>-->
-      </div>
-
-      <nav id="nav-menu-container">
-        <ul class="navbar-nav ml-auto">
-            <!-- Authentication Links -->
-            
-        </ul>
-      </nav>
-      <!-- #nav-menu-container -->
-    </div>
-  </header>
-  <!-- #header -->  
-
-        <main class="py-4">
             @yield('content')
         </main>
     </div>
@@ -129,7 +62,8 @@ Hero Section
 <script src="{{ asset('lib/easing/easing.js') }}"></script>
 
 <!-- Template Specisifc Custom Javascript File -->
-<script src="{{ asset('js/custom.js') }}"></script>    
+<script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('js/ajax.js') }}"></script> 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

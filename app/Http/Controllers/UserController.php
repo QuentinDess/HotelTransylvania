@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Room;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
      /**
@@ -16,16 +16,12 @@ class UserController extends Controller
     //controller pour montrer les membres du staff
     public function showStaff()
     {
-        $staffs= User::where('role', 'personnel')
-        ->orWhere('role', 'manager')
-        ->orWhere('role','proprietaire')
-        ->get();
+        $users= User::all();
         $rooms=Room::all();
-        
-        return view('welcome', compact('staffs','rooms'));
+        return view('espaceStaff', compact('users','rooms'));
     }
     //controller pour montrer les clients
-    public function showClient()
+    public function showAllClient()
     {
         
     }
@@ -51,14 +47,40 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showClient($id)
     {
-        //
+        $user=User::find($id);
+
+       return view('espaceClient', compact('user'));
     }
-
-   
     
-
+    
+    public function showAdmin()
+    {
+        $users= User::all();
+        $rooms=Room::all();
+        return view('espaceAdmin', compact('users','rooms'));
+    }
+    public function showRegister()
+    {
+        return view('addUser');
+    }
+    public function addUser(Request $request)
+    {
+        $user = new User([
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role'=>$request->role,
+            'wage'=>$request->wage,
+            'avatar'=>$request->avatar,
+            'postalCode'=>$request->postalCode,
+            'phoneNumber'=>$request->phoneNumber
+            ]);
+            $user->save();
+            return redirect('/homeAdmin');
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -66,11 +88,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request,User $staff)
+    public function updateUser(Request $request,$id)
     {
-        //
+        $user = User::find($id);    
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role=$request->role;
+        $user->wage=$request->wage;
+        $user->avatar=$request->avatar;
+        $user->postalCode=$request->postalCode;
+        $user->phoneNumber=$request->phoneNumber;   
+        $user->save();
+        return redirect('/');
     }
-
+    public function editUser($id)
+    {
+        $user=User::find($id);
+        return view('editUser',compact('user'));
+    }
+   
 
     /**
      * Remove the specified resource from storage.
@@ -78,8 +116,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyUser($id)
+    public function deleteUser($id)
     {
-        
+        $user=User::find($id);
+        $user->delete();
+        return redirect('/');
     }
 }

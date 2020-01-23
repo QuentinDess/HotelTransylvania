@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('content')  <!--==========================
+@section('content')
+  <!--==========================
   Header Section
   ============================-->
   <header id="header">
@@ -96,25 +97,30 @@
   <!-- #header -->  
 
         <main class="py-4">
-<section id="team">
-    <div class="container wow fadeInUp">
-        <div class="row">
-        @foreach ($rooms as $room)
-          
-      
-            <div class="col-md-3">
-            <div class="member">
-                <div class="pic"><img class="room_img" src="{{$room->avatar}}" alt=""></div>
-                <h4>{{$room->name}}</h4>
-                <span>{{$room->size}}</span>
-                <em> {{$room->price}} $</em></br>
-                <em>{{$room->description}}</em>
-                <a class="btn btn-primary"href="{{route('booking',$room->id)}}">Reserver</a>
+<div class="card">
+        <div class="card-footer">
+                <p>Client N° {{$user->id}}</p>
+        </div>
+        <div class="card-body">
+            <div class="card-text"> 
+                <strong>{{$user->firstName}}</strong> {{$user->lastName}}
+                <p> Informations:</p>
+                <ul>
+                <li>Tel: {{$user->phoneNumber}}</li>
+                <li>Code Postale: {{$user->postalCode}}</li>
+                <li>Email: {{$user->email}}</li>
+                </ul>
             </div>
-            </div>
-      
-        @endforeach
+        </div>
+        <div class="card-footer">
+            <form action="{{ route('editUser', $user->id) }}" method="POST">
+                @csrf                                
+                <button type="submit">Modifier</button>
+            </form>   
+            <form action="{{ route('deleteUser', $user->id) }}" method="POST">
+                @csrf 
+                <button type="submit">Supprimer</button>    
+            </form>    
         </div>
     </div>
-</section>
 @endsection

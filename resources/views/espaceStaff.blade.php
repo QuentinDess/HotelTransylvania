@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('content')  <!--==========================
+@section('content')
+  <!--==========================
   Header Section
   ============================-->
   <header id="header">
@@ -96,25 +97,28 @@
   <!-- #header -->  
 
         <main class="py-4">
-<section id="team">
-    <div class="container wow fadeInUp">
-        <div class="row">
-        @foreach ($rooms as $room)
-          
-      
-            <div class="col-md-3">
-            <div class="member">
-                <div class="pic"><img class="room_img" src="{{$room->avatar}}" alt=""></div>
-                <h4>{{$room->name}}</h4>
-                <span>{{$room->size}}</span>
-                <em> {{$room->price}} $</em></br>
-                <em>{{$room->description}}</em>
-                <a class="btn btn-primary"href="{{route('booking',$room->id)}}">Reserver</a>
+
+<div class="userCards">
+@foreach ($users as $user)
+    @if($user->role=="client")
+    <div class="cardClient">
+        <div class="card-footer">
+                <p>Client N° {{$user->id}}</p>
             </div>
+            <div class="card-body">
+                <div class="card-text"> 
+                    <strong>{{$user->firstName}}</strong> {{$user->lastName}}
+                    <p> Informations:</p>
+                    <ul>
+                    <li>Tel: {{$user->phoneNumber}}</li>
+                    <li>Code Postale: {{$user->postalCode}}</li>
+                    <li>Email: {{$user->email}}</li>
+                    </ul>
+                </div>
             </div>
-      
-        @endforeach
         </div>
     </div>
-</section>
+    @endif
+@endforeach
+</div>
 @endsection

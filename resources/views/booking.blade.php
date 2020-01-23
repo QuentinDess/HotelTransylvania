@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('content')  <!--==========================
+@section('content')
+  <!--==========================
   Header Section
   ============================-->
   <header id="header">
@@ -94,27 +95,5 @@
     </div>
   </header>
   <!-- #header -->  
-
-        <main class="py-4">
-<section id="team">
-    <div class="container wow fadeInUp">
-        <div class="row">
-        @foreach ($rooms as $room)
-          
-      
-            <div class="col-md-3">
-            <div class="member">
-                <div class="pic"><img class="room_img" src="{{$room->avatar}}" alt=""></div>
-                <h4>{{$room->name}}</h4>
-                <span>{{$room->size}}</span>
-                <em> {{$room->price}} $</em></br>
-                <em>{{$room->description}}</em>
-                <a class="btn btn-primary"href="{{route('booking',$room->id)}}">Reserver</a>
-            </div>
-            </div>
-      
-        @endforeach
-        </div>
-    </div>
-</section>
+  <p>coucou this is bookiiing<p>
 @endsection

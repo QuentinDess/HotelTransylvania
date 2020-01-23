@@ -16,15 +16,35 @@ class RoomController extends Controller
         $rooms=Room::all();
         return view('showRoom', compact('rooms'));
     }
-
+    public function showOneRoom($id)
+    {
+        $room=Room::find($id);
+        return view('booking',compact('room'));
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createRoom()
     {
-        //
+        return view('createRoom');
+    }
+    public function postRoom(Request $request)
+    {
+        $room = new Room([
+            'name' => $request->name,
+            'price' => $request->price,
+            'avatar' => $request->avatar,
+            'size' => $request->size,
+            'description'=>$request->description,
+            'doorNumber'=>$request->doorNumber
+            
+            ]);
+        
+            $room->save();
+    
+            return redirect('/homeAdmin');
     }
 
     /**
@@ -55,9 +75,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editRoom($id)
     {
-        //
+        $room=Room::find($id);
+        return view('editRoom',compact('room'));
     }
 
     /**
@@ -67,9 +88,17 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateRoom(Request $request, $id)
     {
-        //
+        $room = Room::find($id);    
+        $room->name = $request->name;
+        $room->price = $request->price;
+        $room->doorNumber = $request->doorNumber;
+        $room->avatar = $request->avatar;
+        $room->size=$request->size;
+        $room->description=$request->description;   
+        $room->save();
+        return redirect('/homeAdmin');
     }
 
     /**
@@ -78,8 +107,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteRoom($id)
     {
-        //
+        $room=Room::find($id);
+        $room->delete();
+        return redirect('/homeAdmin');
     }
 }

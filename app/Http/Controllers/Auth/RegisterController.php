@@ -56,7 +56,6 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role'=>['required','string'],
-      
             'postalCode'=>['required','max:99999'],
             'phoneNumber'=>['required','max:9999999999']
         ]);
@@ -85,8 +84,7 @@ class RegisterController extends Controller
     }
     public function store(Request $request)
     {
-        
-            $user = new User([
+        $user = new User([
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
             'email' => $request->email,
@@ -97,10 +95,10 @@ class RegisterController extends Controller
             'postalCode'=>$request->postalCode,
             'phoneNumber'=>$request->phoneNumber
             ]);
-    
+        
             $user->save();
     
-            return view('welcome');
+            return redirect('/');
         
     }
     

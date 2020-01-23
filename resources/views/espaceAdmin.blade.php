@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('content')  <!--==========================
+@section('content')
+  <!--==========================
   Header Section
   ============================-->
   <header id="header">
@@ -96,25 +97,95 @@
   <!-- #header -->  
 
         <main class="py-4">
-<section id="team">
-    <div class="container wow fadeInUp">
-        <div class="row">
-        @foreach ($rooms as $room)
-          
-      
-            <div class="col-md-3">
-            <div class="member">
-                <div class="pic"><img class="room_img" src="{{$room->avatar}}" alt=""></div>
-                <h4>{{$room->name}}</h4>
-                <span>{{$room->size}}</span>
-                <em> {{$room->price}} $</em></br>
-                <em>{{$room->description}}</em>
-                <a class="btn btn-primary"href="{{route('booking',$room->id)}}">Reserver</a>
-            </div>
-            </div>
-      
+<h2>Voici tout les utilisateurs</h2>
+<table>
+    <thead>
+        <tr> 
+            <th> Prénom </th>
+            <th> Nom </th>
+            <th> Email </th>
+        
+            <th> Numéro de telephone </th>
+            <th> Code postale </th> 
+            <th> Identifiant </th>
+            <th> Salaire </th>
+            <th> Photo </th>
+            <th> Modifier </th>
+            <th> Supprimer </th>
+        </tr>
+    <tbody>
+        @foreach ($users as $user)
+        <tr>
+                <td> {{ $user->firstName }} </td>
+                <td> {{ $user->lastName }} </td>
+                <td> {{ $user->email }} </td> 
+                
+                <td> {{ $user->phoneNumber }}  </td>
+                <td> {{ $user->postalCode }} </td>
+                <td> {{ $user->role }} </td>
+                <td> {{ $user->wage }} </td>
+                @if($user->avatar )
+                <td> <img class="tablePic" src="{{ $user->avatar }}"> </td>
+                @else
+                <td> pas de photo </td>
+                @endif
+                <td>
+                    <form action="{{ route('editUser', $user->id) }}" method="POST">
+                        @csrf                                
+                        <button type="submit">Modifier</button>
+                    </form>    
+                </td> 
+                <td>
+                    <form action="{{ route('deleteUser', $user->id) }}" method="POST">
+                        @csrf 
+                        <button type="submit">Supprimer</button>    
+                    </form>    
+                </td> 
+        </tr>
         @endforeach
-        </div>
-    </div>
-</section>
+    </tbody>
+</table>
+
+<a href="{{route('showRegister')}}"  role="button" class="btn-get-started" >Ajouter un Utilisateur</a>
+<h2>Voici Toutes les chambres</h2>
+
+<table>
+    <thead>
+        <tr> 
+            <th> Nom </th>
+            <th> Numéro de porte </th>
+            <th> Prix </th>
+            <th> Taille </th>
+            <th> Photo </th>
+            <th> Description </th> 
+            <th> Modifier </th>
+            <th> Supprimer </th>
+        </tr>
+    <tbody>
+        @foreach ($rooms as $room)
+        <tr>
+                <td> {{ $room->name }} </td>
+                <td> {{ $room->doorNumber }} </td>
+                <td> {{ $room->price }} $</td> 
+                <td> {{ $room->size}}  </td>
+                <td> <img class="tablePic" src="{{ $room->avatar }}">  </td>
+                <td> {{ $room->description }} </td>
+                
+                <td>
+                    <form action="{{ route('editRoom', $room->id) }}" method="POST">
+                        @csrf                                
+                        <button type="submit">Modifier</button>
+                    </form>    
+                </td> 
+                <td>
+                    <form action="{{ route('deleteRoom', $room->id) }}" method="POST">
+                        @csrf 
+                        <button type="submit">Supprimer</button>    
+                    </form>    
+                </td> 
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+<a href="{{route('createRoom')}}" role="button" class="btn-get-started" >Ajouter une Chambre</a>
 @endsection
