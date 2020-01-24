@@ -4,17 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Model
+class Basket extends Model
 {
     protected $fillable = [
-        'totalPrice','beginDate','user_id','room_id'
+        'totalPrice','user_id','item_id'
     ];
     public function user()
     {
         return $this->belongsTo('App\User');
     }
-    public function room()
+    public function item()
     {
-        return $this->belongsTo('App\Room');
+        return $this->belongsToMany('App\Item');
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Room;
+use App\Booking;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
@@ -49,9 +51,12 @@ class UserController extends Controller
      */
     public function showClient($id)
     {
+        $rooms=Room::all();
         $user=User::find($id);
-
-       return view('espaceClient', compact('user'));
+        $bookings= Booking::all()->where('user_id',$id);
+        
+       
+       return view('espaceClient', compact('user','bookings','rooms'));
     }
     
     

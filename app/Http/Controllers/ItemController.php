@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Booking;
-
-class BookingController extends Controller
+use App\Item;
+use App\Basket;
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showShop()
     {
-        //
+        $items=Item::all();
+        $baskets=Basket::all();
+        return view('shop', compact('items','baskets'));
     }
 
     /**
@@ -22,17 +24,9 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createBooking(Request $request)
+    public function create()
     {
-        
-        $booking=new Booking([
-            'beginDate'=>$request->beginDate,
-            'totalPrice'=>$request->totalPrice,
-            'user_id'=>$request->user_id,
-            'room_id'=>$request->room_id
-        ]);
-        $booking->save();
-        return redirect()->route('homeClient', ['id' => $request->user_id]);
+        //
     }
 
     /**
@@ -86,10 +80,8 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function deleteBooking($id)
+    public function destroy($id)
     {
-        $booking=Booking::find($id);
-        $booking->delete();
-        return redirect('/');
+        //
     }
 }

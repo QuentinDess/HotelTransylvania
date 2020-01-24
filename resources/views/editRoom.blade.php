@@ -35,6 +35,9 @@
             <li>
             <a   href="{{ route('showRoom') }}">{{ __('Nos chambre') }}</a>
           </li>
+          <li>
+            <a   href="{{ route('shop') }}">{{ __('Boutique') }}</a>
+          </li>
                 @if(Auth::user()->role=="client")
             <li>
               <a  href="{{route('homeClient', Auth::user()->id)}}"  role="button" >{{ Auth::user()->firstName }} <span class="caret"></span></a>

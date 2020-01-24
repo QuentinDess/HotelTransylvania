@@ -96,28 +96,63 @@
       <!-- #nav-menu-container -->
     </div>
   </header>
-  <!-- #header -->  
-
-        <main class="py-4">
-<section id="team">
+  <!-- #header --> 
+  <section id="team">
     <div class="container wow fadeInUp">
-        <div class="row">
-        @foreach ($rooms as $room)
-          
-      
-            <div class="col-md-3">
-            <div class="member">
-                <div class="pic"><img class="room_img" src="{{$room->avatar}}" alt=""></div>
-                <h4>{{$room->name}}</h4>
-                <span>{{$room->size}}</span>
-                <em> {{$room->price}} $</em></br>
-                <em>{{$room->description}}</em>
-                <a class="btn btn-primary"href="{{route('booking',$room->id)}}">Reserver</a>
-            </div>
-            </div>
-      
-        @endforeach
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Notre boutique</h3>
+          <div class="section-title-divider"></div>
+          <p class="section-description">Des objets souvenirs et bucoliques</p>
         </div>
-    </div>
-</section>
+      </div>
+
+      <div class="row">
+@foreach ($items as $item)
+      <div class="col-md-3">
+          <div class="member">
+            <div class="pic"><img src="{{$item->photo}}" alt=""></div>
+            <h4>{{$item->name}} </h4>
+            <em>Description: {{$item->description}}</em></br>
+            <em>Prix : {{$item->price}} $</em>
+          </div>
+         
+         
+          <form action="{{ route('createBasket')}}" method="POST">
+          @csrf
+          <input type="hidden" value="{{$item->id}}" name="item_id">
+          <input type="hidden" value="{{Auth::user()->id}}" name="user_id">
+          <div class="form-group row">
+            <label for="totalPrice" class="col-md-4 col-form-label text-md-right">{{ __('Nombre d\'objet') }}</label>
+            <div class="col-md-6">
+                <select name="totalPrice" id="totalPrice" required>
+                    <option  value="{{1*intval($item->price)}}">1</option>
+                    <option  value="{{2*intval($item->price)}}">2</option>
+                    <option  value="{{3*intval($item->price)}}">3</option>
+                    <option  value="{{4*intval($item->price)}}">4</option>
+                    <option  value="{{5*intval($item->price)}}">5</option>
+                    <option  value="{{6*intval($item->price)}}">6</option>
+                    <option  value="{{7*intval($item->price)}}">7</option>
+                    <option  value="{{8*intval($item->price)}}">8</option>
+                    <option  value="{{9*intval($item->price)}}">9</option>
+                </select>
+            </div>
+            <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary updateUser">
+                                    {{ __('Ajouter ') }}
+                                </button>
+                            </div>
+                        </div>
+            </form>
+        </div>
+        
+      
+        
+        
+ </div>           
+@endforeach
+
+
+    </section>
 @endsection

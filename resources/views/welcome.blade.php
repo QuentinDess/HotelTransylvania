@@ -108,8 +108,12 @@ Hero Section
             <li>
               <a   href="{{ route('index') }}">{{ __('Accueil') }}</a>
             </li>
+           
             <li>
             <a   href="{{ route('showRoom') }}">{{ __('Nos chambre') }}</a>
+          </li>
+          <li>
+            <a   href="{{ route('shop') }}">{{ __('Boutique') }}</a>
           </li>
                 @if(Auth::user()->role=="client")
             <li>

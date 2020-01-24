@@ -40,4 +40,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Booking');
     }
+    public function baskets()
+    {
+        return $this->hasMany('App\Basket');
+    }
 }
